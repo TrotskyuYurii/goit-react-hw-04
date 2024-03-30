@@ -1,12 +1,14 @@
 import css from "../ImageCard/ImageCard.module.css";
 
-const ImageCard = ({src, alt_description}) => {
+const ImageCard = ({src, alt_description, onClickOnImage}) => {
 
-console.log(src);
+  const handleClick = () => {
+    onClickOnImage(src); // Передача URL зображення при кліці
+  };
 
   return (
     <div>
-      <img className={css.imageCard} src={src} alt={alt_description} />
+      <img className={css.imageCard} src={src} alt={alt_description} onClick={handleClick}/>
     </div>
   );
 };

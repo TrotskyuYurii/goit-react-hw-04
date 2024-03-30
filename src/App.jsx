@@ -6,6 +6,7 @@ import SearchBar from "./components/SearchBar/SearchBar";
 import Loader from "./components/Loader/Loader";
 import ErrorMessage from './components/ErrorMessage/ErrorMessage'
 import ImageGallery from './components/ImageGallery/ImageGallery'
+import ImageModal from "./components/ImageModal/ImageModal";
 
 function App() {
 
@@ -13,6 +14,8 @@ function App() {
   const [IsError, setIsError] = useState(false);
   const [searchImage, setSearchImage] = useState("");
   const [ImagesData, setImagesData] = useState(null);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [selectedImageUrl, setSelectedImageUrl] = useState("");
   
   // searchBox
   const onSubmit = (eventValue) => {
@@ -40,7 +43,16 @@ function App() {
     }
   }, [searchImage]);
 
-  
+  //modal
+  const onClickOnImage = (imageUrl) => {
+    setSelectedImageUrl(imageUrl);
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
   
 
   return (
@@ -48,7 +60,8 @@ function App() {
       <SearchBar onSubmit={onSubmit} />
       {IsLoad && <Loader />}
       {IsError && <ErrorMessage />}
-      {ImagesData && <ImageGallery Images={ImagesData}/>}
+      {ImagesData && <ImageGallery Images={ImagesData} onClickOnImage={onClickOnImage}/>}
+      {modalIsOpen && <ImageModal imageUrl={selectedImageUrl} modalIsOpen={modalIsOpen} onRequestClose={closeModal}/>}
     </>
   );
 }
