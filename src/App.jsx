@@ -26,7 +26,7 @@ function App() {
   };
 
   // Memoized function to handle requestProductsByQuery
-  const fetchData = useMemo(() => async () => {
+  const fetchData = useMemo(() => async (searchImage, currentPage) => {
     if (searchImage) {
       try {
         setIsLoad(true);
@@ -39,7 +39,7 @@ function App() {
         setIsLoad(false);
       }
     }
-  }, [searchImage, currentPage]);
+  }, []);
 
   // Clear ImagesData when searchImage changes
   useEffect(() => {
@@ -48,8 +48,10 @@ function App() {
 
   // request
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    if (searchImage) {
+      fetchData(searchImage, currentPage);
+    }
+  }, [fetchData, searchImage, currentPage]);
 
   // modal
   const onClickOnImage = (imageUrl) => {
