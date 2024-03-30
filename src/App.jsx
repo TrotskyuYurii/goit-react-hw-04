@@ -25,7 +25,7 @@ function App() {
     setCurrentPage(1);
   };
 
-  // Memoized function to handle requestProductsByQuery
+  // Memo requestProductsByQuery
   const fetchData = useMemo(() => async (searchImage, currentPage) => {
     if (searchImage) {
       try {
