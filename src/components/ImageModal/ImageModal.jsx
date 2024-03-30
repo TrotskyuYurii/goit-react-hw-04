@@ -2,17 +2,25 @@ import Modal from 'react-modal';
 
 const ImageModal = ({ imageUrl, modalIsOpen, onRequestClose }) => {
   
-Modal.setAppElement('#root');
+  Modal.setAppElement('#root');
 
   const customStyles = {
     content: {
+      width: "80%",
+      height: "80%",
       top: "50%",
       left: "50%",
-      right: "auto",
-      bottom: "auto",
-      marginRight: "-50%",
       transform: "translate(-50%, -50%)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
     },
+  };
+
+  const modalImageStyles = {
+    maxWidth: "100%",
+    maxHeight: "100%",
+    objectFit: "contain",
   };
 
   return (
@@ -22,7 +30,7 @@ Modal.setAppElement('#root');
       style={customStyles}
       contentLabel="Image Modal"
     >
-      <img src={imageUrl} alt="Modal Image" />
+      <img src={imageUrl} alt="Modal Image" style={modalImageStyles} />
     </Modal>
   );
 };
