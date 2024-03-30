@@ -7,6 +7,7 @@ import Loader from "./components/Loader/Loader";
 import ErrorMessage from './components/ErrorMessage/ErrorMessage'
 import ImageGallery from './components/ImageGallery/ImageGallery'
 import ImageModal from "./components/ImageModal/ImageModal";
+import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn"
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
     setSearchImage(eventValue);
   };
 
+
   //request
   useEffect(() => {
     if (searchImage) {
@@ -30,7 +32,6 @@ function App() {
         try {
           setIsLoad(true);
           const data = await requestProductsByQuery(searchImage);
-          // console.log(data);
           setImagesData(data.results);
         } catch (error) {
           setIsError(true);
@@ -42,6 +43,7 @@ function App() {
       fetchProductsByQuery();
     }
   }, [searchImage]);
+
 
   //modal
   const onClickOnImage = (imageUrl) => {
@@ -62,6 +64,7 @@ function App() {
       {IsError && <ErrorMessage />}
       {ImagesData && <ImageGallery Images={ImagesData} onClickOnImage={onClickOnImage}/>}
       {modalIsOpen && <ImageModal imageUrl={selectedImageUrl} modalIsOpen={modalIsOpen} onRequestClose={closeModal}/>}
+      <LoadMoreBtn />
     </>
   );
 }
