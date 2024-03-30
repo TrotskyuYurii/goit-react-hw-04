@@ -2,6 +2,8 @@ import Modal from 'react-modal';
 
 const ImageModal = ({ imageUrl, modalIsOpen, onRequestClose }) => {
   
+Modal.setAppElement('#root');
+
   const customStyles = {
     content: {
       top: "50%",
