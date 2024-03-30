@@ -1,13 +1,19 @@
+/* eslint-disable no-inner-declarations */
 import { useState, useEffect } from "react";
 import "./App.css";
 import { requestProductsByQuery } from "./services/api";
 import SearchBar from "./components/SearchBar/SearchBar";
 import Loader from "./components/Loader/Loader";
+import ErrorMessage from './components/ErrorMessage/ErrorMessage'
+import ImageGallery from './components/ImageGallery/ImageGallery'
 
 function App() {
-  // searchBox
-  const [searchImage, setSearchImage] = useState("");
 
+  const [IsLoad, setIsLoad] = useState(false);
+  const [IsError, setIsError] = useState(false);
+  const [searchImage, setSearchImage] = useState("");
+  
+  // searchBox
   const onSubmit = (eventValue) => {
     setSearchImage(eventValue);
   };
@@ -23,7 +29,7 @@ function App() {
           console.log(data);
           // setProducts(data.products);
         } catch (error) {
-          // setIsError(true);
+          setIsError(true);
         } finally {
           setIsLoad(false);
         }
@@ -33,13 +39,15 @@ function App() {
     }
   }, [searchImage]);
 
-  //Loader
-  const [isLoad, setIsLoad] = useState(false);
+  
+  
 
   return (
     <>
       <SearchBar onSubmit={onSubmit} />
-      {isLoad && <Loader />}
+      {IsLoad && <Loader />}
+      {IsError && <ErrorMessage />}
+      <ImageGallery />
     </>
   );
 }
