@@ -1,24 +1,33 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 import SearchBar from './components/SearchBar/SearchBar';
+import Loader from './components/Loader/Loader';
 
 function App() {
-  // Пошукові дані
+  
+  // searchBox
   const [searchImage, setSearchImage] = useState("");
 
-  // Обробка введення даних пошуку
   const onSubmit = (eventValue) => {
     setSearchImage(eventValue);
   };
 
-  // Ефект для відстеження змін у змінній SearchImage
   useEffect(() => {
     console.log('Нове значення у змінній SearchImage:', searchImage);
   }, [searchImage]); 
 
+//Loader
+  const [isLoad, setIsLoad]=useState(false);
+
+  
+
+
+
+
   return (
     <>
       <SearchBar onSubmit={onSubmit} />
+      {isLoad && <Loader />}
     </>
   );
 }

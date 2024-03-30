@@ -9,11 +9,11 @@ const SearchBar = ({ onSubmit }) => {
     const searchInputValue = event.target.form.elements.searchInput.value.trim();
 
     if (searchInputValue === "") {
-      toast.error("Будь ласка, введіть текст для пошуку зображень.");
+      toast.error("Please enter text to search for images.");
       return;
     }
 
-    onSubmit(searchInputValue); // Виклик onSubmit з App.jsx
+    onSubmit(searchInputValue); 
   };
 
   return (
