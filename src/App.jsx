@@ -7,9 +7,8 @@ function App() {
   const [searchImage, setSearchImage] = useState("");
 
   // Обробка введення даних пошуку
-  const onSubmit = (event) => {
-    event.preventDefault(); 
-    setSearchImage(event.target.elements.searchInput.value);
+  const onSubmit = (eventValue) => {
+    setSearchImage(eventValue);
   };
 
   // Ефект для відстеження змін у змінній SearchImage
