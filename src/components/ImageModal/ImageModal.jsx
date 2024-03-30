@@ -5,6 +5,9 @@ const ImageModal = ({ imageUrl, modalIsOpen, onRequestClose }) => {
   Modal.setAppElement('#root');
 
   const customStyles = {
+    overlay: {
+      backgroundColor: 'rgba(0, 0, 0, 0.5)' 
+    },
     content: {
       width: "80%",
       height: "80%",
@@ -14,6 +17,7 @@ const ImageModal = ({ imageUrl, modalIsOpen, onRequestClose }) => {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
+      backgroundColor: 'rgba(0, 0, 0, 0.85)'
     },
   };
 

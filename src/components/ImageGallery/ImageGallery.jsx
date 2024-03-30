@@ -2,7 +2,7 @@ import ImageCard from "../ImageCard/ImageCard";
 import css from "../ImageGallery/ImageGallery.module.css";
 
 const ImageGallery = ({ Images, onClickOnImage }) => {
-  // Внутрішній лічильник для генерації унікальних ключів
+  // Внутрішній лічильник для генерації унікальних ключів (була постіно проблема унікальниіх ключів при повторному натисканні серач після натискання лоадМоре)
   let keyCounter = 0;
 
   return (
