@@ -4,35 +4,37 @@ import "./App.css";
 import { requestProductsByQuery } from "./services/api";
 import SearchBar from "./components/SearchBar/SearchBar";
 import Loader from "./components/Loader/Loader";
-import ErrorMessage from './components/ErrorMessage/ErrorMessage'
-import ImageGallery from './components/ImageGallery/ImageGallery'
+import ErrorMessage from './components/ErrorMessage/ErrorMessage';
+import ImageGallery from './components/ImageGallery/ImageGallery';
 import ImageModal from "./components/ImageModal/ImageModal";
-import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn"
+import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
 
 function App() {
-
   const [IsLoad, setIsLoad] = useState(false);
   const [IsError, setIsError] = useState(false);
   const [searchImage, setSearchImage] = useState("");
-  const [ImagesData, setImagesData] = useState(null);
+  const [ImagesData, setImagesData] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedImageUrl, setSelectedImageUrl] = useState("");
-  
+  const [totalImageOnApi, setTotalImageOnApi] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const IMAGE_PER_PAGE = 12;
+
   // searchBox
   const onSubmit = (eventValue) => {
     setSearchImage(eventValue);
+    setCurrentPage(1); 
   };
-
 
   //request
   useEffect(() => {
     if (searchImage) {
-
       async function fetchProductsByQuery() {
         try {
           setIsLoad(true);
-          const data = await requestProductsByQuery(searchImage);
+          const data = await requestProductsByQuery(searchImage, IMAGE_PER_PAGE, currentPage);
           setImagesData(data.results);
+          setTotalImageOnApi(data.total);
         } catch (error) {
           setIsError(true);
         } finally {
@@ -42,8 +44,7 @@ function App() {
 
       fetchProductsByQuery();
     }
-  }, [searchImage]);
-
+  }, [searchImage, currentPage]);
 
   //modal
   const onClickOnImage = (imageUrl) => {
@@ -55,16 +56,19 @@ function App() {
     setModalIsOpen(false);
   };
 
-  
+  //load more
+  const onClickLoadMore = () => {
+    setCurrentPage((prevPage) => prevPage + 1); 
+  };
 
   return (
     <>
       <SearchBar onSubmit={onSubmit} />
       {IsLoad && <Loader />}
       {IsError && <ErrorMessage />}
-      {ImagesData && <ImageGallery Images={ImagesData} onClickOnImage={onClickOnImage}/>}
-      {modalIsOpen && <ImageModal imageUrl={selectedImageUrl} modalIsOpen={modalIsOpen} onRequestClose={closeModal}/>}
-      <LoadMoreBtn />
+      {ImagesData && <ImageGallery Images={ImagesData} onClickOnImage={onClickOnImage} />}
+      {modalIsOpen && <ImageModal imageUrl={selectedImageUrl} modalIsOpen={modalIsOpen} onRequestClose={closeModal} />}
+      {(currentPage * IMAGE_PER_PAGE < totalImageOnApi) && <LoadMoreBtn onClickLoadMore={onClickLoadMore} />}
     </>
   );
 }

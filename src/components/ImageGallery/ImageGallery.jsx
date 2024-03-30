@@ -3,7 +3,7 @@ import css from "../ImageGallery/ImageGallery.module.css";
 
 const ImageGallery = ({ Images, onClickOnImage }) => {
 
-  console.log(Images);
+  // console.log(Images);
 
   return (
     <ul className={css.ImageGalleryUl}>
