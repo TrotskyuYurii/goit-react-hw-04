@@ -1,13 +1,15 @@
 import css from "../SearchBar/SearchBar.module.css";
 
-const SearchBar = ({onChangeSearch}) => {
+const SearchBar = ({onSubmit}) => {
   return (
-    <header>
-      <form>
+    <header className={css.searchBox}>
+      <form onSubmit={onSubmit}>
         <input
+          className={css.inputArea}
           type="text"
-          autocomplete="off"
-          autofocus
+          name="searchInput"
+        //   autocomplete="off"
+        //   autofocus
           placeholder="Search images and photos"
         />
         <button type="submit">Search</button>

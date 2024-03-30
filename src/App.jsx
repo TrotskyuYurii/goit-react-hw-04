@@ -1,24 +1,27 @@
-import { useState } from 'react'
-import './App.css'
-import SearchBar from './components/SearchBar/SearchBar'
+import { useState, useEffect } from 'react';
+import './App.css';
+import SearchBar from './components/SearchBar/SearchBar';
 
 function App() {
+  // Пошукові дані
+  const [searchImage, setSearchImage] = useState("");
 
-  // Пошукові данні
-  const [SearchImage, setSearchImage] = useState("");
-
-  // Ввод даних пошуку
-  const onChangeSearch = (event) => {
-    setSearchImage(event.target.value);
+  // Обробка введення даних пошуку
+  const onSubmit = (event) => {
+    event.preventDefault(); 
+    setSearchImage(event.target.elements.searchInput.value);
   };
 
-
+  // Ефект для відстеження змін у змінній SearchImage
+  useEffect(() => {
+    console.log('Нове значення у змінній SearchImage:', searchImage);
+  }, [searchImage]); 
 
   return (
     <>
-    <SearchBar onChangeSearch={onChangeSearch}/>
+      <SearchBar onSubmit={onSubmit} />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
