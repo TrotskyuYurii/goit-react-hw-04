@@ -29,6 +29,7 @@ function App() {
   const fetchData = useMemo(() => async (searchImage, currentPage) => {
     if (searchImage) {
       try {
+        setIsError(false);
         setIsLoad(true);
         const data = await requestProductsByQuery(searchImage, IMAGE_PER_PAGE, currentPage);
         setImagesData(prevImagesData => [...prevImagesData, ...data.results]); 
@@ -71,10 +72,10 @@ function App() {
   return (
     <>
       <SearchBar onSubmit={onSubmit} />
-      {IsLoad && <Loader />}
-      {IsError && <ErrorMessage />}
       {ImagesData && <ImageGallery Images={ImagesData} onClickOnImage={onClickOnImage} />}
       {modalIsOpen && <ImageModal imageUrl={selectedImageUrl} modalIsOpen={modalIsOpen} onRequestClose={closeModal} />}
+      {IsLoad && <Loader />}
+      {IsError && <ErrorMessage />}
       {(currentPage * IMAGE_PER_PAGE < totalImageOnApi) && <LoadMoreBtn onClickLoadMore={onClickLoadMore} />}
     </>
   );
