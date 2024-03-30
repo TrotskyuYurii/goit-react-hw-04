@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
-import './App.css';
-import SearchBar from './components/SearchBar/SearchBar';
-import Loader from './components/Loader/Loader';
+import { useState, useEffect } from "react";
+import "./App.css";
+import { requestProductsByQuery } from "./services/api";
+import SearchBar from "./components/SearchBar/SearchBar";
+import Loader from "./components/Loader/Loader";
 
 function App() {
-  
   // searchBox
   const [searchImage, setSearchImage] = useState("");
 
@@ -12,17 +12,29 @@ function App() {
     setSearchImage(eventValue);
   };
 
+  //request
   useEffect(() => {
-    console.log('Нове значення у змінній SearchImage:', searchImage);
-  }, [searchImage]); 
+    if (searchImage) {
 
-//Loader
-  const [isLoad, setIsLoad]=useState(false);
+      async function fetchProductsByQuery() {
+        try {
+          setIsLoad(true);
+          const data = await requestProductsByQuery(searchImage);
+          console.log(data);
+          // setProducts(data.products);
+        } catch (error) {
+          // setIsError(true);
+        } finally {
+          setIsLoad(false);
+        }
+      }
 
-  
+      fetchProductsByQuery();
+    }
+  }, [searchImage]);
 
-
-
+  //Loader
+  const [isLoad, setIsLoad] = useState(false);
 
   return (
     <>
