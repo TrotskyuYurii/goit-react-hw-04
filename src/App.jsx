@@ -12,6 +12,7 @@ function App() {
   const [IsLoad, setIsLoad] = useState(false);
   const [IsError, setIsError] = useState(false);
   const [searchImage, setSearchImage] = useState("");
+  const [ImagesData, setImagesData] = useState(null);
   
   // searchBox
   const onSubmit = (eventValue) => {
@@ -26,8 +27,8 @@ function App() {
         try {
           setIsLoad(true);
           const data = await requestProductsByQuery(searchImage);
-          console.log(data);
-          // setProducts(data.products);
+          // console.log(data);
+          setImagesData(data.results);
         } catch (error) {
           setIsError(true);
         } finally {
@@ -47,7 +48,7 @@ function App() {
       <SearchBar onSubmit={onSubmit} />
       {IsLoad && <Loader />}
       {IsError && <ErrorMessage />}
-      <ImageGallery />
+      {ImagesData && <ImageGallery Images={ImagesData}/>}
     </>
   );
 }

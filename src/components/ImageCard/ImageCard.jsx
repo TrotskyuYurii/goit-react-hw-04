@@ -1,10 +1,12 @@
 import css from "../ImageCard/ImageCard.module.css";
 
-const ImageCard = () => {
+const ImageCard = ({src, alt_description}) => {
+
+console.log(src);
+
   return (
     <div>
-      <p>ImageCard temp</p>
-      <img src="" alt="" />
+      <img className={css.imageCard} src={src} alt={alt_description} />
     </div>
   );
 };
