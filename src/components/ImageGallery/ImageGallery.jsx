@@ -14,7 +14,7 @@ const ImageGallery = ({ Images, onClickOnImage }) => {
             smallImage={image.urls.small}
             alt_description={image.alt_description}
             onClickOnImage={onClickOnImage}
-            bigImage = {image.urls.full}
+            bigImage = {image.urls.regular}
           />
         </li>
       ))}

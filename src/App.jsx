@@ -24,6 +24,7 @@ function App() {
   const onSubmit = (eventValue) => {
     setSearchImage(eventValue);
     setCurrentPage(1); 
+    setImagesData([]);
   };
 
   //request
@@ -33,7 +34,7 @@ function App() {
         try {
           setIsLoad(true);
           const data = await requestProductsByQuery(searchImage, IMAGE_PER_PAGE, currentPage);
-          setImagesData(data.results);
+          setImagesData(prevImagesData => [...prevImagesData, ...data.results]); 
           setTotalImageOnApi(data.total);
         } catch (error) {
           setIsError(true);
@@ -41,7 +42,7 @@ function App() {
           setIsLoad(false);
         }
       }
-
+  
       fetchProductsByQuery();
     }
   }, [searchImage, currentPage]);
