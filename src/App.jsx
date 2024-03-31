@@ -23,6 +23,7 @@ function App() {
   const onSubmit = (eventValue) => {
     setSearchImage(eventValue);
     setCurrentPage(1);
+    setimagesData([]);
   };
 
   // Memo requestProductsByQuery
@@ -42,17 +43,17 @@ function App() {
     }
   }, []);
 
-  // Clear ImagesData when searchImage changes
-  useEffect(() => {
-    setimagesData([]);
-  }, [searchImage]);
+  // // Clear ImagesData when searchImage changes
+  // useEffect(() => {
+  //   setimagesData([]);
+  // }, [searchImage]);
 
   // request
   useEffect(() => {
     if (searchImage) {
       fetchData(searchImage, currentPage);
     }
-  }, [fetchData, searchImage, currentPage]);
+  }, [searchImage, currentPage]);
 
   // modal
   const onClickOnImage = (imageUrl) => {
@@ -72,7 +73,7 @@ function App() {
   return (
     <>
       <SearchBar onSubmit={onSubmit} />
-      {imagesData && <ImageGallery Images={imagesData} onClickOnImage={onClickOnImage} />}
+      {imagesData.length>0 && <ImageGallery Images={imagesData} onClickOnImage={onClickOnImage} />}
       {modalIsOpen && <ImageModal imageUrl={selectedImageUrl} modalIsOpen={modalIsOpen} onRequestClose={closeModal} />}
       {isLoad && <Loader />}
       {isError && <ErrorMessage />}
