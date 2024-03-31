@@ -9,10 +9,10 @@ import ImageModal from "./components/ImageModal/ImageModal";
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
 
 function App() {
-  const [IsLoad, setIsLoad] = useState(false);
-  const [IsError, setIsError] = useState(false);
+  const [isLoad, setisLoad] = useState(false);
+  const [isError, setisError] = useState(false);
   const [searchImage, setSearchImage] = useState("");
-  const [ImagesData, setImagesData] = useState([]);
+  const [imagesData, setimagesData] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedImageUrl, setSelectedImageUrl] = useState("");
   const [totalImageOnApi, setTotalImageOnApi] = useState(0);
@@ -29,22 +29,22 @@ function App() {
   const fetchData = useMemo(() => async (searchImage, currentPage) => {
     if (searchImage) {
       try {
-        setIsError(false);
-        setIsLoad(true);
+        setisError(false);
+        setisLoad(true);
         const data = await requestProductsByQuery(searchImage, IMAGE_PER_PAGE, currentPage);
-        setImagesData(prevImagesData => [...prevImagesData, ...data.results]); 
+        setimagesData(previmagesData => [...previmagesData, ...data.results]); 
         setTotalImageOnApi(data.total);
       } catch (error) {
-        setIsError(true);
+        setisError(true);
       } finally {
-        setIsLoad(false);
+        setisLoad(false);
       }
     }
   }, []);
 
   // Clear ImagesData when searchImage changes
   useEffect(() => {
-    setImagesData([]);
+    setimagesData([]);
   }, [searchImage]);
 
   // request
@@ -72,10 +72,10 @@ function App() {
   return (
     <>
       <SearchBar onSubmit={onSubmit} />
-      {ImagesData && <ImageGallery Images={ImagesData} onClickOnImage={onClickOnImage} />}
+      {imagesData && <ImageGallery Images={imagesData} onClickOnImage={onClickOnImage} />}
       {modalIsOpen && <ImageModal imageUrl={selectedImageUrl} modalIsOpen={modalIsOpen} onRequestClose={closeModal} />}
-      {IsLoad && <Loader />}
-      {IsError && <ErrorMessage />}
+      {isLoad && <Loader />}
+      {isError && <ErrorMessage />}
       {(currentPage * IMAGE_PER_PAGE < totalImageOnApi) && <LoadMoreBtn onClickLoadMore={onClickLoadMore} />}
     </>
   );
