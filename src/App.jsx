@@ -19,12 +19,16 @@ function App() {
   const [currentPage, setCurrentPage] = useState(1);
   const IMAGE_PER_PAGE = 12;
 
+  
   // searchBox
   const onSubmit = (eventValue) => {
-    setSearchImage(eventValue);
-    setCurrentPage(1);
-    setimagesData([]);
+    if (eventValue !== searchImage) {
+      setSearchImage(eventValue);
+      setCurrentPage(1);
+      setimagesData([]);
+    }
   };
+  
 
   // Memo requestProductsByQuery
   const fetchData = async (searchImage, currentPage) => {
