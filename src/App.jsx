@@ -27,7 +27,7 @@ function App() {
   };
 
   // Memo requestProductsByQuery
-  const fetchData = useMemo(() => async (searchImage, currentPage) => {
+  const fetchData = async (searchImage, currentPage) => {
     if (searchImage) {
       try {
         setisError(false);
@@ -41,7 +41,7 @@ function App() {
         setisLoad(false);
       }
     }
-  }, []);
+  };
 
   // // Clear ImagesData when searchImage changes
   // useEffect(() => {
